@@ -1,0 +1,23 @@
+package model.services;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import model.dao.DaoFactory;
+import model.dao.SitesDao;
+import model.entities.Sites;
+
+public class SiteService {
+	
+	private SitesDao dao = DaoFactory.createSitesDao();
+	
+	public List<Sites> findAll(){
+		
+		return dao.findAll();
+//		List<Sites> list = new ArrayList<>();
+//		list.add(new Sites(1,"camisetaecia@live.com","gr007879","gitHub" ));
+//		list.add(new Sites(2,"gilservicosweb@gmail.com","gr007879rg","gmailGil" ));
+//		list.add(new Sites(3,"gilservicosweb@gmail.com","gr007879rg","oracle" ));
+//		return list;
+	}
+}
