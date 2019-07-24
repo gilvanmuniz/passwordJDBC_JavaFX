@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="216.0" prefWidth="567.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<AnchorPane prefHeight="216.0" prefWidth="567.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SitesFormController">
    <children>
       <GridPane prefHeight="161.0" prefWidth="542.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
@@ -47,17 +46,17 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField editable="false" GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="txtId" editable="false" GridPane.columnIndex="1" />
+            <TextField fx:id="txtUser" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtPassword" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtSite" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <HBox prefHeight="64.0" prefWidth="242.0" spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <Button mnemonicParsing="false" text="SAVE" />
-                  <Button mnemonicParsing="false" text="CANCEL" />
+                  <Button fx:id="btSave" mnemonicParsing="false" onAction="#onBtSaveAction" text="SAVE" />
+                  <Button fx:id="btCancel" mnemonicParsing="false" onAction="#onBtCancelAction" text="CANCEL" />
                </children>
             </HBox>
-            <Label prefHeight="17.0" prefWidth="26.0" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Label fx:id="labelErrorSite" prefHeight="17.0" prefWidth="26.0" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <font>
                   <Font size="14.0" />
                </font>
