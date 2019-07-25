@@ -53,7 +53,8 @@ public class PasswordListController implements Initializable {
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/SitesForm.fxml", parentStage);
+		Sites obj = new Sites();
+		createDialogForm(obj, "/gui/SitesForm.fxml", parentStage);
 	}
 	
 	public void setSiteService(SiteService service) {
@@ -82,10 +83,15 @@ public class PasswordListController implements Initializable {
 		tableViewSites.setItems(obsList);
 	}
 	
-	private void createDialogForm(String absoluteName, Stage parentStage) {
+	private void createDialogForm(Sites obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
+			
+			SitesFormController controller = loader.getController();
+			controller.setSites(obj);
+			controller.updateSitesData();
+						
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Enter Site and password");
 			dialogStage.setScene(new Scene(pane));

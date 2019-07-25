@@ -9,8 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.entities.Sites;
 
 public class SitesFormController implements Initializable {
+	private Sites entity;
 	
 	@FXML 
 	private TextField txtId;
@@ -32,6 +34,20 @@ public class SitesFormController implements Initializable {
 	
 	@FXML 
 	private Button btCancel;
+	
+	public void setSites(Sites entity) {
+		this.entity = entity;
+	}
+	
+	public void updateSitesData() {
+		if(entity == null) {
+			throw new IllegalStateException("Entity was null");
+		}
+		txtId.setText(String.valueOf(entity.getId()));
+		txtUser.setText(entity.getUserLogin());
+		txtPassword.setText(entity.getPassword());
+		txtSite.setText(entity.getSite());
+	}
 	
 	@FXML
 	public void onBtSaveAction() {
