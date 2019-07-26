@@ -86,12 +86,14 @@ public class SitesDaoJDBC implements SitesDao {
 		try {
 			st = conn.prepareStatement(
 				"INSERT INTO sitesandpassword " +
-				"(Name) " +
+				"(userLogin, password, site) " +
 				"VALUES " +
-				"(?)", 
+				"(?,?,?)", 
 				Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, obj.getUserLogin());
+			st.setString(2, obj.getPassword());
+			st.setString(3, obj.getSite());
 
 			int rowsAffected = st.executeUpdate();
 			
@@ -120,7 +122,7 @@ public class SitesDaoJDBC implements SitesDao {
 		try {
 			st = conn.prepareStatement(
 				"UPDATE sitesandpassword " +
-				"SET Name = ? " +
+				"SET userLogin = ? ,password = ?, site = ? " +
 				"WHERE Id = ?");
 
 			st.setString(1, obj.getUserLogin());

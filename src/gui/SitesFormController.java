@@ -3,16 +3,24 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import db.DbException;
+import gui.util.Alerts;
 import gui.util.Constraints;
+import gui.util.Utils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Sites;
+import model.services.SiteService;
 
 public class SitesFormController implements Initializable {
 	private Sites entity;
+	
+	private SiteService service;
 	
 	@FXML 
 	private TextField txtId;
@@ -39,6 +47,10 @@ public class SitesFormController implements Initializable {
 		this.entity = entity;
 	}
 	
+	public void setSiteService(SiteService service) {
+		this.service = service;
+	}
+	
 	public void updateSitesData() {
 		if(entity == null) {
 			throw new IllegalStateException("Entity was null");
@@ -50,13 +62,35 @@ public class SitesFormController implements Initializable {
 	}
 	
 	@FXML
-	public void onBtSaveAction() {
-		System.out.println("OnBtSave");
+	public void onBtSaveAction(ActionEvent event) {
+		if(entity == null) {
+			throw new IllegalStateException("Entity was null");
+		}
+		if(service == null) {
+			throw new IllegalStateException("Service was null");
+		}
+		try {
+			entity = getFormData();
+			service.saveOrUpdate(entity);
+			Utils.currentStage(event).close();
+		}
+		catch (DbException e) {
+			Alerts.showAlert("Error saving obj", null, e.getMessage(), AlertType.ERROR);
+		}
 	}
 	
+	private Sites getFormData() {
+		Sites obj = new Sites();
+		obj.setId(Utils.tryParsetoInt(txtId.getText()));
+		obj.setUserLogin(txtUser.getText());
+		obj.setPassword(txtPassword.getText());
+		obj.setSite(txtSite.getText());		
+		return obj;
+	}
+
 	@FXML
-	public void onBtCancelAction() {
-		System.out.println("OnBtCancel");
+	public void onBtCancelAction(ActionEvent event) {
+		Utils.currentStage(event).close();
 	}
 	
 	

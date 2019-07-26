@@ -90,6 +90,7 @@ public class PasswordListController implements Initializable {
 			
 			SitesFormController controller = loader.getController();
 			controller.setSites(obj);
+			controller.setSiteService(new SiteService());
 			controller.updateSitesData();
 						
 			Stage dialogStage = new Stage();

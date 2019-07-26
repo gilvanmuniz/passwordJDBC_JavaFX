@@ -20,4 +20,14 @@ public class SiteService {
 //		list.add(new Sites(3,"gilservicosweb@gmail.com","gr007879rg","oracle" ));
 //		return list;
 	}
-}
+	
+	public void saveOrUpdate(Sites obj) {
+		if(obj.getId() == null) {
+			dao.insert(obj);
+		}
+		else {
+			dao.update(obj);
+		}
+	}
+	
+}//class end
