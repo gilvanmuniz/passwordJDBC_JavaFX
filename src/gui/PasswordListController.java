@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -26,7 +27,7 @@ import model.entities.Sites;
 import model.services.SiteService;
 
 
-public class PasswordListController implements Initializable {
+public class PasswordListController implements Initializable, DataChangeListener {
 	
 	private SiteService service;
 	
@@ -91,6 +92,7 @@ public class PasswordListController implements Initializable {
 			SitesFormController controller = loader.getController();
 			controller.setSites(obj);
 			controller.setSiteService(new SiteService());
+			controller.subscribeDataChangeListener(this);
 			controller.updateSitesData();
 						
 			Stage dialogStage = new Stage();
@@ -104,6 +106,12 @@ public class PasswordListController implements Initializable {
 		catch(IOException e) {
 			Alerts.showAlert("IO Excption", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+	@Override
+	public void onDataChanged() {
+		updateTableView();
+		
 	}
 
 }
