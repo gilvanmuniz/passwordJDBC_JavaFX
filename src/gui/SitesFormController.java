@@ -3,7 +3,9 @@ package gui;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import db.DbException;
 import gui.listeners.DataChangeListener;
@@ -18,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Sites;
+import model.exception.ValidationException;
 import model.services.SiteService;
 
 public class SitesFormController implements Initializable {
@@ -84,6 +87,9 @@ public class SitesFormController implements Initializable {
 			notifyDataChangeListeners();
 			Utils.currentStage(event).close();
 		}
+		catch(ValidationException e) {
+			setErrorMessage(e.getErros());
+		}
 		catch (DbException e) {
 			Alerts.showAlert("Error saving obj", null, e.getMessage(), AlertType.ERROR);
 		}
@@ -97,10 +103,18 @@ public class SitesFormController implements Initializable {
 
 	private Sites getFormData() {
 		Sites obj = new Sites();
+		ValidationException exception =  new ValidationException("Validation Error");
 		obj.setId(Utils.tryParsetoInt(txtId.getText()));
 		obj.setUserLogin(txtUser.getText());
 		obj.setPassword(txtPassword.getText());
-		obj.setSite(txtSite.getText());		
+		if(txtSite.getText() == null) {
+			exception.addError("site", "Field can't be empty");
+		}
+		
+		obj.setSite(txtSite.getText());
+		if(exception.getErros().size() > 0) {
+			throw exception;
+		}		
 		return obj;
 	}
 
@@ -120,6 +134,13 @@ public class SitesFormController implements Initializable {
 	private void initializeNodes() {
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldMaxLength(txtUser, 60);
+	}
+	
+	private void setErrorMessage(Map<String, String> errors) {
+		Set<String> fields = errors.keySet();
+		if(fields.contains("site")) {
+			labelErrorSite.setText(errors.get("site"));
+		}
 	}
 
 }
