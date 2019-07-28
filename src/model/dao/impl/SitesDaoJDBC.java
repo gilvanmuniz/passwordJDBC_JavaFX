@@ -123,12 +123,12 @@ public class SitesDaoJDBC implements SitesDao {
 			st = conn.prepareStatement(
 				"UPDATE sitesandpassword " +
 				"SET userLogin = ? ,password = ?, site = ? " +
-				"WHERE Id = ?");
+				"WHERE id = ?");
 
 			st.setString(1, obj.getUserLogin());
-			st.setString(1, obj.getPassword());
-			st.setString(1, obj.getSite());
-			st.setInt(2, obj.getId());
+			st.setString(2, obj.getPassword());
+			st.setString(3, obj.getSite());
+			st.setInt(4, obj.getId());
 
 			st.executeUpdate();
 		}

@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -45,6 +47,9 @@ public class PasswordListController implements Initializable, DataChangeListener
 	
 	@FXML
 	private TableColumn<Sites, String> tableColumnSite;
+	
+	@FXML
+	private TableColumn<Sites, Sites> tableColumnEdit;
 	
 	@FXML
 	private Button btnNew;
@@ -82,6 +87,7 @@ public class PasswordListController implements Initializable, DataChangeListener
 		List<Sites> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewSites.setItems(obsList);
+		initEditButtons();
 	}
 	
 	private void createDialogForm(Sites obj, String absoluteName, Stage parentStage) {
@@ -113,5 +119,28 @@ public class PasswordListController implements Initializable, DataChangeListener
 		updateTableView();
 		
 	}
+	
+	//método para criar um novo botão de edição
+	//o método é chamado no updateTableView()
+	private void initEditButtons() {
+		tableColumnEdit.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnEdit.setCellFactory(param -> new TableCell<Sites, Sites>() {
+			private final Button button = new Button("edit");
+
+			@Override
+			protected void updateItem(Sites obj, boolean empty) {
+				super.updateItem(obj, empty);
+
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+
+				setGraphic(button);
+				button.setOnAction(
+						event -> createDialogForm(obj, "/gui/SitesForm.fxml", Utils.currentStage(event)));
+			}
+		});
+	} // fim do initEditButtons
 
 }
