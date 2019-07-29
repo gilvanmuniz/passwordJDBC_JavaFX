@@ -30,4 +30,8 @@ public class SiteService {
 		}
 	}
 	
+	public void remove(Sites obj) {
+		dao.deleteById(obj.getId());
+	}
+	
 }//class end
