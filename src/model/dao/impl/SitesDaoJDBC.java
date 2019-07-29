@@ -49,6 +49,34 @@ public class SitesDaoJDBC implements SitesDao {
 			DB.closeResultSet(rs);
 		}
 	}
+	
+	@Override
+	public Sites findByName(String site) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+				"SELECT * FROM sitesandpassword WHERE site = ?");
+			st.setString(1, site);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				Sites obj = new Sites();
+				obj.setId(rs.getInt("id"));
+				obj.setUserLogin(rs.getString("userLogin"));
+				obj.setPassword(rs.getString("password"));
+				obj.setSite(rs.getString("site"));
+				return obj;
+			}
+			return null;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
 
 	@Override
 	public List<Sites> findAll() {

@@ -41,7 +41,7 @@
                </font>
             </Text>
             <Button fx:id="buttonSearch" layoutX="188.0" layoutY="185.0" mnemonicParsing="false" onAction="#onButtonSearchAction" prefHeight="25.0" prefWidth="77.0" text="BUSCAR" />
-            <Label fx:id="labelResult" layoutX="174.0" layoutY="99.0">
+            <Label fx:id="labelResult" alignment="CENTER" contentDisplay="CENTER" layoutY="95.0" prefHeight="27.0" prefWidth="451.0" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
                   <Font size="18.0" />
                </font>

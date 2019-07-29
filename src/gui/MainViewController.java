@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-import gui.util.Alerts;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,13 +13,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.entities.Sites;
 import model.services.SiteService;
 
 
 public class MainViewController implements Initializable{
+	
+	private SiteService service = new SiteService();
+	
 	@FXML
 	private MenuItem menuItemRegistration;
 	
@@ -44,7 +46,9 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onButtonSearchAction() {
-		System.out.println("Busca acionada!!");
+//		System.out.println("Busca acionada!!");
+		String site = textSearchSite.getText();		
+		showSiteByName(site);
 	}
 	
 	@Override
@@ -96,6 +100,12 @@ public class MainViewController implements Initializable{
 ////		T controller = loader.getController();
 ////		initializeAction.accept(controller);
 //	}
+	
+	public void showSiteByName(String name) {
+		Sites obj = service.findByName(name);
+		System.out.println(obj.getUserLogin() + " - " + obj.getPassword());
+		labelResult.setText(obj.getUserLogin() + " - " + obj.getPassword());
+	}
 	
 	
 

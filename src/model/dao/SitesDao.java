@@ -10,5 +10,6 @@ public interface SitesDao {
 	void update(Sites obj);
 	void deleteById(Integer id);
 	Sites findById(Integer id);
+	Sites findByName(String name);
 	List<Sites> findAll();
 }

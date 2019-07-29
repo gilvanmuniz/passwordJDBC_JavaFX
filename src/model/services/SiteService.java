@@ -21,6 +21,14 @@ public class SiteService {
 //		return list;
 	}
 	
+	public Sites findById(Integer id) {
+		return dao.findById(id);
+	}
+	
+	public Sites findByName(String name) {
+		return dao.findByName(name);
+	}
+	
 	public void saveOrUpdate(Sites obj) {
 		if(obj.getId() == null) {
 			dao.insert(obj);
