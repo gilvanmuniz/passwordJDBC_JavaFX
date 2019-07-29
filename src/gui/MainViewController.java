@@ -103,8 +103,13 @@ public class MainViewController implements Initializable{
 	
 	public void showSiteByName(String name) {
 		Sites obj = service.findByName(name);
-		System.out.println(obj.getUserLogin() + " - " + obj.getPassword());
-		labelResult.setText(obj.getUserLogin() + " - " + obj.getPassword());
+		if(obj == null) {
+			labelResult.setText("Site não consta na lista");
+		}
+		else {
+			System.out.println(obj.getUserLogin() + " - " + obj.getPassword());
+			labelResult.setText(obj.getUserLogin() + " - " + obj.getPassword());
+		}
 	}
 	
 	
